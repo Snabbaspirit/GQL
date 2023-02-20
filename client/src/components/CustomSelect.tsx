@@ -25,7 +25,7 @@ const defaultSelectState = {
 };
 
 export const CustomSelect = <T extends TDefaultOptions>({
-    options,
+    options
 }: {
     options: T;
 }) => {
@@ -51,7 +51,10 @@ export const CustomSelect = <T extends TDefaultOptions>({
         e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
     ) => {
         const value = e.target.value;
-        if (value.length > 0 && !value.match(REGEX_PATTERN)) {
+        if (
+            value.length > 0 &&
+            !value.replace(/\s/g, '').match(REGEX_PATTERN)
+        ) {
             dispatch(setIsInputError(true));
         } else {
             dispatch(setIsInputError(false));
@@ -61,7 +64,7 @@ export const CustomSelect = <T extends TDefaultOptions>({
 
     const handleAddNewValue = () => {
         dispatch(setIsSubmitting(true));
-        if(state.newValue.name.length === 0) {
+        if (state.newValue.name.length === 0) {
             return;
         }
 
